@@ -1,0 +1,21 @@
+  $ sudo apt-get install qemu libncurses5-dev gcc-arm-linux-gnueabi build-essential gdb-arm-none-eabi gcc-aarch64-linux-gnu eclipse-cdt libdw-dev systemtap systemtap-runtime
+   
+   编译ARM32内核：
+   $ export ARCH=arm
+   $ export CROSS_COMPILE=arm-linux-gnueabi-
+   $ cd _install_arm32/dev/
+   $ sudo mknod console c 5 1  
+   $ sudo mknod null c 1 3 
+   $ cd runninglinuxkernel_4.0
+   $ make vexpress_defconfig 
+   $ make bzImage –j4
+   $ make dtbs
+   
+   运行ARM32内核：
+   $ qemu-system-arm -M vexpress-a9 -smp 4 -m 1024M -kernel arch/arm/boot/zImage  -append "rdinit=/linuxrc console=ttyAMA0 loglevel=8" -dtb arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic
+  
+  turn off qemu simulation:
+/ # poweroff
+
+
+
